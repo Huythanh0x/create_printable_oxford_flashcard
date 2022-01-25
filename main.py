@@ -31,4 +31,29 @@ def crawl_5k_words():
         crawler = OxfordWordCrawler()
         crawler.crawl_5000_words()
 
-craw_a_list_word_and_export_html("ielts_list_word")
+def create_flashcard_from_csv(file_name):
+
+    generator = HTMLFlashCardGenerator(f'{file_name}')
+    generator.create_html_flash_card()
+
+def crawl_word_list(word_list,output_file_name):
+    crawler = OxfordWordCrawler()    
+    crawler.crawl_list_word(word_list,f'{output_file_name}')
+
+# craw_a_list_word_and_export_html("ielts_list_word")
+
+# crawl_5k_words()
+
+# create_flashcard_from_csv('_2k_advance')
+def get_word_list_exclude_5k(file_name):
+    with open (f"data_csv/{file_name}.csv",'r') as f:
+        word_list = f.readlines()
+
+    word_list_exclude_5k = [word for word in word_list if word.split("|")[3] == "D"]
+    with open (f"data_csv/{file_name}_exclude_5k.csv",'w') as f:
+        for word in word_list_exclude_5k:
+            f.writelines(f"{word}")
+
+create_flashcard_from_csv('new_demo')
+
+# crawl_570_words_from_url()
