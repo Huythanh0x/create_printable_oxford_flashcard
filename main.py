@@ -54,6 +54,6 @@ def get_word_list_exclude_5k(file_name):
         for word in word_list_exclude_5k:
             f.writelines(f"{word}")
 
-create_flashcard_from_csv('new_demo')
+create_flashcard_from_csv('_2k_advance')
 
 # crawl_570_words_from_url()
