@@ -1,13 +1,168 @@
-@media print {   .pagebreak { page-break-before: always; } /* page-break-after works, as well */}
-*{    margin: 0;}
-.page1{margin: 0px 20px 0px 0px;}
-.page2{margin: 0px 20px 0px 0px;}
-.container{    position: relative;    margin: 0px 0px 0px;    display: flex;}
-.front_card{    margin-left:0px;    width: 283.4px;    height: 154.4px;    background: #FFFFFF;    border-radius: 0px;    border: black 2px solid;    position: relative;}
-.front_card .type_of_word{position: absolute;width: auto;padding:3px 5px;height: 12px;font-family: sans-serif;left: 0px;top: 0px;background: #FFFFFF;border-radius: 15px;border: black 2px solid;font-style: normal;font-weight: normal;font-size: 12px;line-height: 14px;color: #000000;text-align: center;}
-.front_card .word{position: absolute;width: auto;height: 19px;top: 28px;margin: 0px 0px 0px;left:50%;transform: translateX(-50%);font-family: 'Montserrat', sans-serif;font-style: normal;font-weight: 700;font-size: 26px;line-height: 20px;color: #0798D6;}
-.front_card .describe{    position: absolute;width: 94%;height: auto;left: 50%;transform: translateX(-50%);top: 70px;font-family: sans-serif;font-style: normal;font-weight: normal;font-size: 14px;line-height: 110%;color: #000000;}.back_card{margin-left:0px;width: 283.4px;height: 154.4px;background: #FFFFFF;border-radius: 0px;border: black 2px solid;position: relative;transform: rotate(-180deg);}
-.back_card .ipa{    position: absolute;    width: max-content;    height: 19px;    top: 15px;    left: 50%;    font-family: 'Montserrat', sans-serif;    font-style: normal;    font-weight: 700;    font-size: 26px;    line-height: 30px;    transform: translateX(-50%);    color: #0798D6;}
-.back_card .example{    font-family: sans-serif;    margin-bottom: 8px;    font-style: normal;    font-weight: normal;    font-size: 14px;    line-height: 110%;    color: #000000;}
-.container_example{    position: absolute;    width: 94%;    height: auto;    left: 50%;    transform: translateX(-50%);    top: 60px;}.footer{    font-family: sans-serif;    margin-bottom: 8px;    margin-right: 5px;    position: absolute;    font-style: normal;    font-weight: normal;    font-size: 10px;    line-height: 0;    color: #000000;    bottom: 0;    right: 0;}
-.additional_describe{position: absolute;width: 80%;top:115px;height: auto;left:40px;font-family: sans-serif;font-style: normal;font-weight: normal;font-size: 14px;line-height: 110%;color: #000000;}.back_card{margin-left:0px;width: 283.4px;height: 154.4px;background: #FFFFFF;border-radius: 0px;border: black 2px solid;position: relative;transform: rotate(-180deg);}
+@media print {
+    .pagebreak {
+        page-break-before: always;
+    }
+    /* page-break-after works, as well */
+}
+
+* {
+    margin: 0;
+}
+
+.page1 {
+    margin: 0px 20px 0px 0px;
+}
+
+.page2 {
+    margin: 0px 20px 0px 0px;
+}
+
+.container {
+    position: relative;
+    margin: 0px 0px 0px;
+    display: flex;
+}
+
+.front_card {
+    margin-left: 0px;
+    width: 283.4px;
+    height: 155.4px;
+    background: #FFFFFF;
+    border-radius: 0px;
+    border: black 2px solid;
+    position: relative;
+}
+
+.front_card .type_of_word {
+    position: absolute;
+    width: auto;
+    padding: 3px 5px;
+    height: 12px;
+    font-family: sans-serif;
+    left: 0px;
+    top: 0px;
+    background: #FFFFFF;
+    border-radius: 15px;
+    border: black 2px solid;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+    text-align: center;
+}
+
+.front_card .word {
+    position: absolute;
+    width: max-content;
+    height: 19px;
+    top: 28px;
+    margin: 0px 0px 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 20px;
+    color: #0798D6;
+}
+
+.front_card .describe {
+    position: absolute;
+    width: 94%;
+    height: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 70px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 110%;
+    color: #000000;
+}
+
+.back_card {
+    margin-left: 0px;
+    width: 283.4px;
+    height: 155.4px;
+    background: #FFFFFF;
+    border-radius: 0px;
+    border: black 2px solid;
+    position: relative;
+    transform: rotate(-180deg);
+}
+
+.back_card .ipa {
+    position: absolute;
+    width: max-content;
+    height: 19px;
+    top: 15px;
+    left: 50%;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 30px;
+    transform: translateX(-50%);
+    color: #0798D6;
+}
+
+.back_card .example {
+    font-family: sans-serif;
+    margin-bottom: 8px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 110%;
+    color: #000000;
+}
+
+.container_example {
+    position: absolute;
+    width: 94%;
+    height: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 60px;
+}
+
+.footer {
+    font-family: sans-serif;
+    margin-bottom: 8px;
+    margin-right: 5px;
+    position: absolute;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 0;
+    color: #000000;
+    bottom: 0;
+    right: 0;
+}
+
+.additional_describe {
+    position: absolute;
+    width: 80%;
+    top: 115px;
+    height: auto;
+    left: 40px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 110%;
+    color: #000000;
+}
+
+.back_card {
+    margin-left: 0px;
+    width: 283.4px;
+    height: 155.4px;
+    background: #FFFFFF;
+    border-radius: 0px;
+    border: black 2px solid;
+    position: relative;
+    transform: rotate(-180deg);
+}
