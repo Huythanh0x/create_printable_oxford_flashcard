@@ -87,7 +87,7 @@ class HTMLFlashCardGenerator():
                         else:
                             type_of_speech = "noun"
                             en_word = "BatDauLapTrinh"
-                            description = "A blog where I share my career journey and some learnings I picked up along the way"
+                            description = "FFFF"
                         if len(description) > 170:
                             front_card_html = f'<div class="front_card"><span class="type_of_word">{type_of_speech}</span><h2 class="word">{en_word}</h2><p class="describe" style="top:55px;">{main_description}</p><p class="additional_describe" style="top:100px;">{additional_description}</p></div>'
                         else:
@@ -113,7 +113,7 @@ class HTMLFlashCardGenerator():
                                 except:
                                     pass
                         else:
-                            api_us = "Blog BatDauLapTrinh"
+                            api_us = "   BatDauLapTrinh"
                             example = "How to create English Flashcard for printing"
                             example_x = "Use study set to learn anything you want in ELSA SPEAK FREE"
                         f.write(f'<div class="back_card"><h2 class="ipa">{api_us}</h2><div class="container_example"><p class="example">{example}</p><p class="example">{example_x}</p></div></div>')
