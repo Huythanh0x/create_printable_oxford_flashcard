@@ -26,10 +26,10 @@
 .front_card {
     margin-left: 0px;
     width: 283.4px;
-    height: 155.4px;
+    height: 154.2px;
     background: #FFFFFF;
     border-radius: 0px;
-    border: black 1.6px solid;
+    border: black 2px solid;
     position: relative;
 }
 
@@ -86,7 +86,7 @@
 .back_card {
     margin-left: 0px;
     width: 283.4px;
-    height: 155.4px;
+    height: 154.2px;
     background: #FFFFFF;
     border-radius: 0px;
     position: relative;
@@ -153,4 +153,8 @@
     font-size: 14px;
     line-height: 110%;
     color: #000000;
+}
+
+.cl{
+    font-weight: bold;
 }

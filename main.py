@@ -72,8 +72,19 @@ def f7(seq):
     seen_add = seen.add
     return [x for x in seq if not (x in seen or seen_add(x))]
 
+def get_D_cefr(file_name):
+    with open(f"data_csv/{file_name}.csv",'r') as f:
+        list_here = f.readlines()
+    new_list =  [word for word in list_here if '|D|' in word]
 
-# create_flashcard_from_csv('vocab_for_IELTS')
-# craw_a_list_word_and_export_html("multiple_meaning")
+    with open(f"data_csv/{file_name}_file_D.csv",'w') as f:
+        for line in new_list:
+            f.writelines(f'{line}')
+
+
+
+create_flashcard_from_csv('ielts_list_word_file_D')
+# craw_a_list_word_and_export_html("new_demo")
 # crawl_5k_words()
 # remove_A1_A2_B1("data_csv/for_print_today.csv")
+# get_D_cefr('ielts_list_word')

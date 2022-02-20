@@ -5,7 +5,7 @@ import bs4
 class OxfordWordCrawler():
     def __init__(self):
         op = webdriver.ChromeOptions()
-        # op.add_argument('headless')
+        op.add_argument('headless')
         self.driver = webdriver.Chrome(ChromeDriverManager().install(),options=op)
         self.BASE_URL = f"https://www.oxfordlearnersdictionaries.com"
         with open("error.log",'w') as f:
@@ -37,8 +37,9 @@ class OxfordWordCrawler():
         except:
             definition = ""
         try:
-            examples = [example.text for example in soup.find('ul',{'class':'examples'})]
-            pass
+            examples = [str(example) for example in soup.find('ul',{'class':'examples'})]
+
+            print(examples)
             if examples is not None and len(examples) > 0:
                 examples = ";".join(examples)
             else:
@@ -91,7 +92,6 @@ class OxfordWordCrawler():
 
     def crawl_list_word(self,list_word,output_name):
         for word in list_word:
-            #https://www.oxfordlearnersdictionaries.com/search/english/?q=maximise
             word_url = f"{self.BASE_URL}/search/english/?q={word.strip()}"
             try:
                 _id,en_word,type,cefr,definition,api_uk,api_us,mp3_uk,mp3_us,examples,clean_word_url = self.get_data_from_url(word_url)
@@ -100,3 +100,8 @@ class OxfordWordCrawler():
             except:
                 with open('error.log','a') as f:
                     f.writelines(f'{word_url}\n')
+
+
+oxfordWordCrawler = OxfordWordCrawler()
+_,_,_,_,_,_,_,_,_,examples,_ = oxfordWordCrawler.get_data_from_url("https://www.oxfordlearnersdictionaries.com/search/english/?q=maximise")
+print(examples)
