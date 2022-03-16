@@ -2,32 +2,26 @@ import requests
 from bs4 import BeautifulSoup
 from html_flashcard_generator import HTMLFlashCardGenerator
 from oxford_word_crawler import OxfordWordCrawler
+import glob
+import os
 
-
-def crawl_570_words_from_url():
+def crawl_570_words():
     raw_html = requests.get("https://igeenglish.com/ielts-vocabulary/570-academic-word-list/").content
     soup = BeautifulSoup(raw_html)
     table = soup.find("tbody")
-    with open('data_csv/_570_academic_words.csv','a') as f:
-        word_list = [word.find('td').text for word in table.find_all("tr")]
+    word_list = [word.find('td').text for word in table.find_all("tr")]
     crawler = OxfordWordCrawler()
     crawler.crawl_list_word(word_list,'_570_academic_words')
 
-def create_570_flashcards_html():
-    generator = HTMLFlashCardGenerator('_570_academic_words')
-    generator.create_html_flash_card()
 
 
-def craw_a_list_word_and_export_html(output_file_name):
+def craw_a_list_word(output_file_name):
     with open("input_word_list/word_list.txt",'r') as f:
         word_list = f.readlines()
     crawler = OxfordWordCrawler()    
     crawler.crawl_list_word(word_list,f'{output_file_name}')
 
-    generator = HTMLFlashCardGenerator(f'{output_file_name}')
-    generator.create_html_flash_card()
-
-def crawl_5k_words():
+def crawl_5000_words():
         crawler = OxfordWordCrawler()
         crawler.crawl_5000_words()
 
@@ -80,11 +74,46 @@ def get_D_cefr(file_name):
     with open(f"data_csv/{file_name}_file_D.csv",'w') as f:
         for line in new_list:
             f.writelines(f'{line}')
+def create_list_word_for_ELSA(file_name):
+    with open(f'data_csv/{file_name}.csv','r') as f:
+        list_word = f.readlines()
+    pure_list_word = []
+    for word in list_word:
+        pure_list_word.append(word.split("|")[1].strip())
+        pure_list_word.append(str(BeautifulSoup(word.split("|")[9]).text.split(';')[-1]).strip())
 
+    with open(f'output_word_list_for_elsa/{file_name}','w') as f:
+        f.writelines("\n".join(pure_list_word))
 
+def rename_file_multiple_part():
+    full_files_name = glob.glob("data_csv/*")
+    pure_files_name = [name[:-11] for name in full_files_name]
+    # print(pure_files_name)
+    multiple_parts_files_name = []
+    for i,name in enumerate(pure_files_name):
+        if pure_files_name.index(name) != i:
+            multiple_parts_files_name.append(name)
+    single_part_files_name = [file_name for file_name in pure_files_name if file_name not in multiple_parts_files_name]
 
-create_flashcard_from_csv('ielts_list_word_file_D')
-# craw_a_list_word_and_export_html("new_demo")
-# crawl_5k_words()
+    for single_part_file_name in single_part_files_name:
+        try:
+            os.rename(f'{single_part_file_name}_part_1.csv',f'{single_part_file_name}_full_part.csv')
+        except:
+            print(f'don\'t need to rename {single_part_file_name}')
+
+def create_all_flash_card():
+    full_files_name = glob.glob("data_csv/*")
+    for name in full_files_name:
+        create_flashcard_from_csv(name[9:-4])
+
+# craw_a_list_word("my_custom_wordlist")
+# crawl_5000_words()
 # remove_A1_A2_B1("data_csv/for_print_today.csv")
 # get_D_cefr('ielts_list_word')
+# crawl_570_words()
+# create_list_word_for_ELSA('_570_academic_words')
+
+
+rename_file_multiple_part()
+
+create_all_flash_card()

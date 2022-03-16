@@ -1,4 +1,5 @@
 import math
+from bs4 import BeautifulSoup
 from fontTools.ttLib import TTFont
 
 
@@ -87,7 +88,7 @@ class HTMLFlashCardGenerator():
                         else:
                             type_of_speech = "noun"
                             en_word = "BatDauLapTrinh"
-                            description = "FFFF"
+                            main_description = "A blog where  wrote about lesson experience I have learned along my career path"
                         if len(description) > 170:
                             front_card_html = f'<div class="front_card"><span class="type_of_word">{type_of_speech}</span><h2 class="word">{en_word}</h2><p class="describe" style="top:55px;">{main_description}</p><p class="additional_describe" style="top:100px;">{additional_description}</p></div>'
                         else:
@@ -102,13 +103,12 @@ class HTMLFlashCardGenerator():
                         card_index = base_index + card    
                         if card_index < number_of_word:
                             api_us = word_list[card_index].split('|')[6]
-                            example = word_list[card_index].split('|')[9].split(';')[0]
+                            example = word_list[card_index].split('|')[9].split(';')[-1].replace('li','span')
                             example_x = ""
-                            if len(example) < 50:
+                            if len(BeautifulSoup(example).text) < 50:
                                 try:
-                                    if len(word_list[card_index].split('|')[9].split(';')[1]) < 80: 
-                                        example_x = word_list[card_index].split('|')[9].split(';')[1]
-                                    else:
+                                    example_x = word_list[card_index].split('|')[9].split(';')[-2].replace('li','span')
+                                    if len(BeautifulSoup(example_x).text) > 50: 
                                         example_x = ""
                                 except:
                                     pass

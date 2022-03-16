@@ -1,6 +1,8 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 import bs4
+import math
+MAX_LENGTH_WORDLIST = 2200
 
 class OxfordWordCrawler():
     def __init__(self):
@@ -10,8 +12,8 @@ class OxfordWordCrawler():
         self.BASE_URL = f"https://www.oxfordlearnersdictionaries.com"
         with open("error.log",'w') as f:
             f.writelines("")
-        with open("data_csv/multiple_meaning.csv",'w') as f:
-            f.writelines("")
+        # with open("data_csv/multiple_meaning.csv",'w') as f:
+        #     f.writelines("")
     def get_html_from_local_html(self):
         with open('Oxford 3000 and 5000 _ OxfordLearnersDictionaries.com.html','r') as f:
             self.html_content = '\n'.join(f.readlines())
@@ -23,9 +25,9 @@ class OxfordWordCrawler():
     
     def get_data_from_url(self,clean_word_url):
         self.driver.get(clean_word_url)
-        if "1" in self.driver.current_url:
-            with open("data_csv/multiple_meaning.csv","a") as f:
-                f.writelines(f"{self.driver.current_url}\n")
+        # if "1" in self.driver.current_url:
+        #     with open("data_csv/multiple_meaning.csv","a") as f:
+        #         f.writelines(f"{self.driver.current_url}\n")
         detail_word_html = self.driver.page_source
         soup = bs4.BeautifulSoup(detail_word_html)
         _id = clean_word_url.split('/')[-1].strip()
@@ -39,7 +41,7 @@ class OxfordWordCrawler():
         try:
             examples = [str(example) for example in soup.find('ul',{'class':'examples'})]
 
-            print(examples)
+            # print(examples)
             if examples is not None and len(examples) > 0:
                 examples = ";".join(examples)
             else:
@@ -77,31 +79,37 @@ class OxfordWordCrawler():
     def crawl_5000_words(self):
         self.get_html_from_remote()
         self.get_clean_word_list_url()
+        count_valid_basic_word = 1
+        count_valid_advanced_word = 1
         for word_url in self.clearn_word_list_url:
             try:
                 _id,en_word,type,cefr,definition,api_uk,api_us,mp3_uk,mp3_us,examples,clean_word_url = self.get_data_from_url(word_url)
                 if cefr == "B2+" or cefr == "C1":
-                    with open(f"data_csv/_2k_advance.csv","a") as f:
+                    with open(f"data_csv/_2k_advance_part_{count_valid_advanced_word//MAX_LENGTH_WORDLIST+1}.csv","a") as f:
                         f.write(f"{_id}|{en_word}|{type}|{cefr}|{definition}|{api_uk}|{api_us}|{mp3_uk}|{mp3_us}|{examples}|{clean_word_url}\n")
+                        count_valid_advanced_word += 1
                 else:
-                    with open(f"data_csv/_3k_basic.csv","a") as f:
+                    with open(f"data_csv/_3k_basic_part_{count_valid_basic_word//MAX_LENGTH_WORDLIST+1}.csv","a") as f:
                         f.write(f"{_id}|{en_word}|{type}|{cefr}|{definition}|{api_uk}|{api_us}|{mp3_uk}|{mp3_us}|{examples}|{clean_word_url}\n")    
+                        count_valid_basic_word += 1
             except:
                 with open('error.log','a') as f:
                     f.writelines(f'{word_url}\n')
 
     def crawl_list_word(self,list_word,output_name):
+        count_valid_word = 1
         for word in list_word:
             word_url = f"{self.BASE_URL}/search/english/?q={word.strip()}"
             try:
                 _id,en_word,type,cefr,definition,api_uk,api_us,mp3_uk,mp3_us,examples,clean_word_url = self.get_data_from_url(word_url)
-                with open(f"data_csv/{output_name}.csv","a") as f:
-                    f.write(f"{_id}|{en_word}|{type}|{cefr}|{definition}|{api_uk}|{api_us}|{mp3_uk}|{mp3_us}|{examples}|{clean_word_url}\n")    
+                with open(f"data_csv/{output_name}_part_{count_valid_word//MAX_LENGTH_WORDLIST+1}.csv","a") as f:
+                    f.write(f"{_id}|{en_word}|{type}|{cefr}|{definition}|{api_uk}|{api_us}|{mp3_uk}|{mp3_us}|{examples}|{clean_word_url}\n") 
+                    count_valid_word += 1   
             except:
                 with open('error.log','a') as f:
                     f.writelines(f'{word_url}\n')
 
 
-oxfordWordCrawler = OxfordWordCrawler()
-_,_,_,_,_,_,_,_,_,examples,_ = oxfordWordCrawler.get_data_from_url("https://www.oxfordlearnersdictionaries.com/search/english/?q=maximise")
-print(examples)
+# oxfordWordCrawler = OxfordWordCrawler()
+# _,_,_,_,_,_,_,_,_,examples,_ = oxfordWordCrawler.get_data_from_url("https://www.oxfordlearnersdictionaries.com/search/english/?q=maximise")
+# print(examples)
